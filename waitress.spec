@@ -4,7 +4,7 @@
 #
 Name     : waitress
 Version  : 0.9.0
-Release  : 19
+Release  : 20
 URL      : https://pypi.python.org/packages/source/w/waitress/waitress-0.9.0.tar.gz
 Source0  : https://pypi.python.org/packages/source/w/waitress/waitress-0.9.0.tar.gz
 Summary  : Waitress WSGI server
