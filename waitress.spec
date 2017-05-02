@@ -4,7 +4,7 @@
 #
 Name     : waitress
 Version  : 1.0.2
-Release  : 30
+Release  : 31
 URL      : http://pypi.debian.net/waitress/waitress-1.0.2.tar.gz
 Source0  : http://pypi.debian.net/waitress/waitress-1.0.2.tar.gz
 Summary  : Waitress WSGI server
