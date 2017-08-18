@@ -4,7 +4,7 @@
 #
 Name     : waitress
 Version  : 1.0.2
-Release  : 31
+Release  : 32
 URL      : http://pypi.debian.net/waitress/waitress-1.0.2.tar.gz
 Source0  : http://pypi.debian.net/waitress/waitress-1.0.2.tar.gz
 Summary  : Waitress WSGI server
@@ -28,11 +28,12 @@ BuildRequires : tox
 BuildRequires : virtualenv
 
 %description
-Waitress is meant to be a production-quality pure-Python WSGI server with very
 acceptable performance.  It has no dependencies except ones which live in the
-Python standard library.  It runs on CPython on Unix and Windows under Python
-2.7+ and Python 3.3+.  It is also known to run on PyPy 1.6.0+ on UNIX.  It
-supports HTTP/1.0 and HTTP/1.1.
+        Python standard library.  It runs on CPython on Unix and Windows under Python
+        2.7+ and Python 3.3+.  It is also known to run on PyPy 1.6.0+ on UNIX.  It
+        supports HTTP/1.0 and HTTP/1.1.
+        
+        For more information, see the "docs" directory of the Waitress package or
 
 %package bin
 Summary: bin components for the waitress package.
@@ -54,8 +55,11 @@ python components for the waitress package.
 %setup -q -n waitress-1.0.2
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1489025565
+export SOURCE_DATE_EPOCH=1503083007
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
@@ -63,12 +67,15 @@ python3 setup.py build -b py3
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages python2 setup.py test
+PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test
 %install
-export SOURCE_DATE_EPOCH=1489025565
+export SOURCE_DATE_EPOCH=1503083007
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+echo ----[ mark ]----
+cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
+echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
@@ -79,4 +86,5 @@ python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 
 %files python
 %defattr(-,root,root,-)
-/usr/lib/python*/*
+/usr/lib/python2*/*
+/usr/lib/python3*/*
