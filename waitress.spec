@@ -4,7 +4,7 @@
 #
 Name     : waitress
 Version  : 1.0.2
-Release  : 34
+Release  : 35
 URL      : http://pypi.debian.net/waitress/waitress-1.0.2.tar.gz
 Source0  : http://pypi.debian.net/waitress/waitress-1.0.2.tar.gz
 Summary  : Waitress WSGI server
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : ZPL-2.1
 Requires: waitress-bin
 Requires: waitress-legacypython
+Requires: waitress-python3
 Requires: waitress-python
 Requires: Sphinx
 Requires: coverage
@@ -47,6 +48,7 @@ bin components for the waitress package.
 %package legacypython
 Summary: legacypython components for the waitress package.
 Group: Default
+Requires: python-core
 
 %description legacypython
 legacypython components for the waitress package.
@@ -56,9 +58,19 @@ legacypython components for the waitress package.
 Summary: python components for the waitress package.
 Group: Default
 Requires: waitress-legacypython
+Requires: waitress-python3
 
 %description python
 python components for the waitress package.
+
+
+%package python3
+Summary: python3 components for the waitress package.
+Group: Default
+Requires: python3-core
+
+%description python3
+python3 components for the waitress package.
 
 
 %prep
@@ -69,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1505366811
+export SOURCE_DATE_EPOCH=1507180809
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
@@ -79,7 +91,7 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test
 %install
-export SOURCE_DATE_EPOCH=1505366811
+export SOURCE_DATE_EPOCH=1507180809
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
@@ -99,5 +111,8 @@ echo ----[ mark ]----
 /usr/lib/python2*/*
 
 %files python
+%defattr(-,root,root,-)
+
+%files python3
 %defattr(-,root,root,-)
 /usr/lib/python3*/*
