@@ -4,14 +4,13 @@
 #
 Name     : waitress
 Version  : 1.1.0
-Release  : 39
+Release  : 40
 URL      : http://pypi.debian.net/waitress/waitress-1.1.0.tar.gz
 Source0  : http://pypi.debian.net/waitress/waitress-1.1.0.tar.gz
 Summary  : Waitress WSGI server
 Group    : Development/Tools
 License  : ZPL-2.1
 Requires: waitress-bin
-Requires: waitress-legacypython
 Requires: waitress-python3
 Requires: waitress-python
 Requires: Sphinx
@@ -45,19 +44,9 @@ Group: Binaries
 bin components for the waitress package.
 
 
-%package legacypython
-Summary: legacypython components for the waitress package.
-Group: Default
-Requires: python-core
-
-%description legacypython
-legacypython components for the waitress package.
-
-
 %package python
 Summary: python components for the waitress package.
 Group: Default
-Requires: waitress-legacypython
 Requires: waitress-python3
 
 %description python
@@ -81,8 +70,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507728567
-python2 setup.py build -b py2
+export SOURCE_DATE_EPOCH=1523310238
 python3 setup.py build -b py3
 
 %check
@@ -91,10 +79,8 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test
 %install
-export SOURCE_DATE_EPOCH=1507728567
 rm -rf %{buildroot}
-python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
-python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -105,10 +91,6 @@ echo ----[ mark ]----
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/waitress-serve
-
-%files legacypython
-%defattr(-,root,root,-)
-/usr/lib/python2*/*
 
 %files python
 %defattr(-,root,root,-)
