@@ -4,7 +4,7 @@
 #
 Name     : waitress
 Version  : 1.1.0
-Release  : 43
+Release  : 44
 URL      : http://pypi.debian.net/waitress/waitress-1.1.0.tar.gz
 Source0  : http://pypi.debian.net/waitress/waitress-1.1.0.tar.gz
 Summary  : Waitress WSGI server
@@ -12,6 +12,7 @@ Group    : Development/Tools
 License  : ZPL-2.1
 Requires: waitress-bin
 Requires: waitress-python3
+Requires: waitress-license
 Requires: waitress-python
 Requires: Sphinx
 Requires: coverage
@@ -22,7 +23,6 @@ BuildRequires : pip
 BuildRequires : pluggy
 BuildRequires : py-python
 BuildRequires : pytest
-
 BuildRequires : python3-dev
 BuildRequires : setuptools
 BuildRequires : tox
@@ -39,9 +39,18 @@ acceptable performance.  It has no dependencies except ones which live in the
 %package bin
 Summary: bin components for the waitress package.
 Group: Binaries
+Requires: waitress-license
 
 %description bin
 bin components for the waitress package.
+
+
+%package license
+Summary: license components for the waitress package.
+Group: Default
+
+%description license
+license components for the waitress package.
 
 
 %package python
@@ -70,16 +79,18 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1523310238
+export SOURCE_DATE_EPOCH=1530364641
 python3 setup.py build -b py3
 
 %check
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test
+PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/waitress
+cp LICENSE.txt %{buildroot}/usr/share/doc/waitress/LICENSE.txt
 python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -91,6 +102,10 @@ echo ----[ mark ]----
 %files bin
 %defattr(-,root,root,-)
 /usr/bin/waitress-serve
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/waitress/LICENSE.txt
 
 %files python
 %defattr(-,root,root,-)
