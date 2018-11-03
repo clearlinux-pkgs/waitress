@@ -4,27 +4,20 @@
 #
 Name     : waitress
 Version  : 1.1.0
-Release  : 47
+Release  : 48
 URL      : http://pypi.debian.net/waitress/waitress-1.1.0.tar.gz
 Source0  : http://pypi.debian.net/waitress/waitress-1.1.0.tar.gz
 Summary  : Waitress WSGI server
 Group    : Development/Tools
 License  : ZPL-2.1
-Requires: waitress-bin
-Requires: waitress-python3
-Requires: waitress-license
-Requires: waitress-python
-Requires: Sphinx
-Requires: coverage
-Requires: docutils
-Requires: nose
-BuildRequires : pbr
-BuildRequires : pip
+Requires: waitress-bin = %{version}-%{release}
+Requires: waitress-license = %{version}-%{release}
+Requires: waitress-python = %{version}-%{release}
+Requires: waitress-python3 = %{version}-%{release}
+BuildRequires : buildreq-distutils3
 BuildRequires : pluggy
 BuildRequires : py-python
 BuildRequires : pytest
-BuildRequires : python3-dev
-BuildRequires : setuptools
 BuildRequires : tox
 BuildRequires : virtualenv
 
@@ -39,7 +32,7 @@ acceptable performance.  It has no dependencies except ones which live in the
 %package bin
 Summary: bin components for the waitress package.
 Group: Binaries
-Requires: waitress-license
+Requires: waitress-license = %{version}-%{release}
 
 %description bin
 bin components for the waitress package.
@@ -56,7 +49,7 @@ license components for the waitress package.
 %package python
 Summary: python components for the waitress package.
 Group: Default
-Requires: waitress-python3
+Requires: waitress-python3 = %{version}-%{release}
 
 %description python
 python components for the waitress package.
@@ -79,8 +72,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530364641
-python3 setup.py build -b py3
+export SOURCE_DATE_EPOCH=1541280641
+python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
@@ -89,9 +82,9 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/waitress
-cp LICENSE.txt %{buildroot}/usr/share/doc/waitress/LICENSE.txt
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/waitress
+cp LICENSE.txt %{buildroot}/usr/share/package-licenses/waitress/LICENSE.txt
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -104,8 +97,8 @@ echo ----[ mark ]----
 /usr/bin/waitress-serve
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/waitress/LICENSE.txt
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/waitress/LICENSE.txt
 
 %files python
 %defattr(-,root,root,-)
