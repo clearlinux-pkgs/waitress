@@ -1,5 +1,5 @@
 PKG_NAME := waitress
-URL = https://files.pythonhosted.org/packages/43/50/9890471320d5ad22761ae46661cf745f487b1c8c4ec49352b99e1078b970/waitress-1.3.0.tar.gz
+URL = https://files.pythonhosted.org/packages/a6/e6/708da7bba65898e5d759ade8391b1077e49d07be0b0223c39f5be04def56/waitress-1.3.1.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
