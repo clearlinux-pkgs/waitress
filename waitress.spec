@@ -4,7 +4,7 @@
 #
 Name     : waitress
 Version  : 1.3.1
-Release  : 55
+Release  : 56
 URL      : https://files.pythonhosted.org/packages/a6/e6/708da7bba65898e5d759ade8391b1077e49d07be0b0223c39f5be04def56/waitress-1.3.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/a6/e6/708da7bba65898e5d759ade8391b1077e49d07be0b0223c39f5be04def56/waitress-1.3.1.tar.gz
 Summary  : Waitress WSGI server
