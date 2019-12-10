@@ -4,7 +4,7 @@
 #
 Name     : waitress
 Version  : 1.3.1
-Release  : 57
+Release  : 58
 URL      : https://files.pythonhosted.org/packages/a6/e6/708da7bba65898e5d759ade8391b1077e49d07be0b0223c39f5be04def56/waitress-1.3.1.tar.gz
 Source0  : https://files.pythonhosted.org/packages/a6/e6/708da7bba65898e5d759ade8391b1077e49d07be0b0223c39f5be04def56/waitress-1.3.1.tar.gz
 Summary  : Waitress WSGI server
@@ -22,11 +22,7 @@ BuildRequires : tox
 BuildRequires : virtualenv
 
 %description
-Waitress
 ========
-.. image:: https://img.shields.io/pypi/v/waitress.svg
-:target: https://pypi.org/project/waitress/
-:alt: latest version of waitress on PyPI
 
 %package bin
 Summary: bin components for the waitress package.
@@ -65,14 +61,14 @@ python3 components for the waitress package.
 
 %prep
 %setup -q -n waitress-1.3.1
+cd %{_builddir}/waitress-1.3.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1567012005
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1576017533
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -88,12 +84,12 @@ python3 setup.py build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
+PYTHONPATH=%{buildroot}$(python -c "import sys; print(sys.path[-1])") python setup.py test
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/waitress
-cp LICENSE.txt %{buildroot}/usr/share/package-licenses/waitress/LICENSE.txt
+cp %{_builddir}/waitress-1.3.1/LICENSE.txt %{buildroot}/usr/share/package-licenses/waitress/a0b53f43aab58b46bf79ba756c50771c605ab4c5
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -108,7 +104,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/waitress/LICENSE.txt
+/usr/share/package-licenses/waitress/a0b53f43aab58b46bf79ba756c50771c605ab4c5
 
 %files python
 %defattr(-,root,root,-)
